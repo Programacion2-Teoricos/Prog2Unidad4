@@ -1,86 +1,45 @@
 package logica;
 
-public class Alumno {
-	//atributos
-	private String apellido;
-	private int grupo;
-	private double cuotaBase;
-	private Fecha nacimiento ;
+public class Becado extends Alumno{
 	
-	//constructor por defecto
-	public Alumno() {
-		
-	}
+	private double saldoBeca;
 	
-	//constructor especÃ­fico
-	public Alumno(String ape, int gru, double cu, Fecha nacim) {
-		apellido=ape;
-		grupo=gru;
-		cuotaBase=cu;
-		nacimiento= nacim;
-	}
-	
-	//getter y setter	get:obtener y set:poner
-	public String getApellido() {
-		return apellido;
-	}
-	
-	public void setApellido(String apellido) {
-		this.apellido=apellido;
-	}
-	
-	public int getGrupo() {
-		return grupo;
-	}
-	
-	public void setGrupo(int gru) {
-		grupo=gru;
-	}
-	
-	public double getCuotaBase() {
-		return cuotaBase;
-	}
-	
-	public void setCuotaBase(double cuota) {
-		cuotaBase=cuota;
-	}
-	
-	public Fecha getNacimiento() {
-		return nacimiento;
-	}
-	
-	public void setNacimiento(Fecha nac) {
-		nacimiento=nac;
-	}
-	
-	//metodo especifico
-	public boolean boletoGratis() {
-		boolean siCorresponde = false;
-		int edad=2020-nacimiento.getAnio();
-		
-		if (edad<18)
-			siCorresponde = true;
-		return siCorresponde;
-	}
-	
-	public double cuotaNeta() {
-		double monto = cuotaBase;
-		if (grupo == 1 || grupo == 2)
-			monto = cuotaBase * 0.60;
-		if (grupo == 3 || grupo == 4)
-			monto = cuotaBase * 0.80;
-		return monto;
-	}
-	
-	//toString
-	@Override
-	public String toString() {
-		return "apellido: "+apellido+
-				" grupo: "+grupo+
-				" cuotaBase: "+cuotaBase+
-				" Fecha Nac: "+nacimiento.toString();
-				
-		
+	public Becado() {
 	}
 
+	public Becado(double saldoBeca, String apellido, int grupo, double cuotaBase, Fecha nacimiento ) {
+		super(apellido,grupo,cuotaBase,nacimiento);
+		this.saldoBeca=saldoBeca;
+	}
+
+	public double getSaldoBeca() {
+		return saldoBeca;
+	}
+
+	public void setSaldoBeca(double saldoBeca) {
+		this.saldoBeca = saldoBeca;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " saldoBeca=" + saldoBeca;
+	}
+	
+	//si el saldoBeca es <200 le corresponde boletoGratis
+	
+	@Override
+	public boolean boletoGratis() {
+		boolean corresponde=false;
+		
+		if (saldoBeca<200)
+			corresponde=true;
+		return corresponde;
+		
+	}
+	
+	@Override
+	public double cuotaNeta() {
+		return(super.cuotaNeta() - saldoBeca);
+	}
+	
 }
